@@ -28,6 +28,9 @@ func (g grpcStats) toTags() []string {
 }
 
 func (g grpcStats) send(client *statsd.Client) {
+	if client == nil {
+		return
+	}
 	client.Timing(
 		g.metricName,
 		g.duration,
