@@ -55,7 +55,7 @@ type Option struct {
 	ErrorToCode ErrorToCode
 }
 
-func (o *Option) setDefaults() {
+func setDefaults(o *Option) {
 	if o == nil {
 		o = &Option{}
 	}
@@ -69,7 +69,7 @@ func (o *Option) setDefaults() {
 
 // UnaryServerInterceptor returns a new unary server interceptors that sends statsd
 func UnaryServerInterceptor(client *statsd.Client, o *Option) grpc.UnaryServerInterceptor {
-	o.setDefaults()
+	setDefaults(o)
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 		// before
 		startTime := time.Now()
@@ -94,7 +94,7 @@ func UnaryServerInterceptor(client *statsd.Client, o *Option) grpc.UnaryServerIn
 
 // StreamServerInterceptor returns a new streaming server interceptor for panic recovery.
 func StreamServerInterceptor(client *statsd.Client, o *Option) grpc.StreamServerInterceptor {
-	o.setDefaults()
+	setDefaults(o)
 	return func(srv interface{}, stream grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) (err error) {
 		// before
 		startTime := time.Now()
