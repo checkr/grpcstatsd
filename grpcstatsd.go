@@ -29,6 +29,7 @@ func (g grpcStats) toTags() []string {
 
 func (g grpcStats) send(client *statsd.Client) {
 	if client == nil {
+		fmt.Println("statsd client is nil in grpcstatsd middleware")
 		return
 	}
 	client.Timing(
